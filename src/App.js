@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+
+import { Fragment } from "react";
+import { Switch } from "react-router-dom";
+
+// import { Route, Routes, Switch, useLocation } from "react-router-dom";
+import routes from "./routes/index";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import Layout from "./pages/Layout";
 import './App.css';
+// import Home from "./components/Home/Home";
 
 function App() {
+  const isAuth = true
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      
+      {isAuth && (
+        <Layout>
+          <Switch>
+            {routes.map((route, index) => (
+              <ProtectedRoute key={index} exact path={route.path} {...route} />
+            ))}
+          </Switch>
+        </Layout>
+      )}
+    </Fragment>
   );
 }
 
